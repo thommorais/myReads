@@ -14,13 +14,11 @@ class BooksApp extends React.Component {
 		shelfs: [],
 	}
 
-	componentWillMount() {
-		BooksAPI.getAll().then(myBooks => {
-			const shelfs = myBooks.reduce( (acc, book) => organizeShelf(acc, book),[]);
-			this.setState({ shelfs, myBooks });
-		})
+	async componentDidMount() {
+		const myBooks = await BooksAPI.getAll()
+		const shelfs = myBooks.reduce((acc, book) => organizeShelf(acc, book), []);
+		this.setState({ shelfs, myBooks });
 	}
-
 
 	addToCollection(book, shelf){
 
@@ -29,14 +27,14 @@ class BooksApp extends React.Component {
 
 		if(!foundBook){
 
-				foundBook.shelf = shelf;
-				foundBook.label = null;
+			book.shelf = shelf;
+			book.label = null;
 
-				this.setState(prevState => {
-					const { myBooks } = prevState;
-					myBooks.push(foundBook);
-					return {myBooks};
-				})
+			this.setState(prevState => {
+				const { myBooks } = prevState;
+				myBooks.push(book)
+				return {myBooks};
+			})
 
 		}
 

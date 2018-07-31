@@ -7,11 +7,9 @@ export default function Shelf(props) {
     const { shelf, onChangeShelf} = props;
     const { name, books} = shelf;
 
-    const hasBooks = books.length ? true : false;
-
     return (
             <React.Fragment>
-            {hasBooks &&
+            {!!books.length &&
                     <div className="bookshelf">
                         <h2 className="bookshelf-title">{getShelfName(name)}</h2>
                         <div className="bookshelf-books">
